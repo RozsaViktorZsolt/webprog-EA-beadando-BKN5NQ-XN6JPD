@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>OOJS Grafika - Pattogó Labda</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: #222; color: white; }
+        .info { position: absolute; top: 10px; left: 10px; z-index: 10; font-family: sans-serif; }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h1>Objektumorientált JS Grafika</h1>
+        <p>Kattints a képernyőre új labda hozzáadásához!</p>
+    </div>
 
+    <script>
+        // Alaposztály a grafikus alakzatoknak
+        class Alakzat {
+            constructor(x, y, szin) {
+                this.x = x;
+                this.y = y;
+                this.szin = szin;
+                this.elem = document.createElement('div');
+            }
+
+            megjelenit() {
+                this.elem.style.position = 'absolute';
+                this.elem.style.backgroundColor = this.szin;
+                this.elem.style.left = `${this.x}px`;
+                this.elem.style.top = `${this.y}px`;
+                // Kötelező elem: document.body.appendChild
+                document.body.appendChild(this.elem);
+            }
+        }
+
+        // Származtatott osztály (inheritance)
+        class Labda extends Alakzat {
+            constructor(x, y, sugar, szin, sebessegX, sebessegY) {
+                super(x, y, szin); // Kötelező: super hívás
+                this.sugar = sugar;
+                this.sebessegX = sebessegX;
+                this.sebessegY = sebessegY;
+                
+                // Labda formázása
+                this.elem.style.width = `${sugar * 2}px`;
+                this.elem.style.height = `${sugar * 2}px`;
+                this.elem.style.borderRadius = '50%';
+                this.megjelenit();
+            }
+
+            mozgat() {
+                this.x += this.sebessegX;
+                this.y += this.sebessegY;
+
+                // Ütközésvizsgálat a falakkal
+                if (this.x <= 0 || this.x + this.sugar * 2 >= window.innerWidth) this.sebessegX *= -1;
+                if (this.y <= 0 || this.y + this.sugar * 2 >= window.innerHeight) this.sebessegY *= -1;
+
+                this.elem.style.left = `${this.x}px`;
+                this.elem.style.top = `${this.y}px`;
+            }
+        }
+
+        const labdak = [];
+
+        function ujLabda(e) {
+            const szinek = ['#fff', '#4CAF50', '#FFD700', '#FF4500'];
+            const randomSzin = szinek[Math.floor(Math.random() * szinek.length)];
+            const l = new Labda(
+                e ? e.clientX : 100, 
+                e ? e.clientY : 100, 
+                15, 
+                randomSzin, 
+                Math.random() * 10 - 5, 
+                Math.random() * 10 - 5
+            );
+            labdak.push(l);
+        }
+
+        function animacio() {
+            labdak.forEach(l => l.mozgat());
+            requestAnimationFrame(animacio);
+        }
+
+        window.addEventListener('click', ujLabda);
+        ujLabda(); // Egy labda kezdésnek
+        animacio();
+    </script>
+</body>
+</html>
