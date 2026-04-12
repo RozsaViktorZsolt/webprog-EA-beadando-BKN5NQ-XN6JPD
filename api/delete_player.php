@@ -14,4 +14,4 @@ if ($id) {
     $stmt = $dbh->prepare("DELETE FROM players WHERE id = :id");
     $stmt->execute([':id' => $id]);
 }
-?>>
+?>
