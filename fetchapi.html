@@ -1,24 +1,114 @@
-async function listazas() {
-    try {
-        const response = await fetch('api/get_players.php'); // [cite: 31]
-        const adatok = await response.json();
-        
-        const tabla = document.getElementById('jatekosok');
-        tabla.innerHTML = ''; // Táblázat ürítése
-        
-        adatok.forEach(player => {
-            tabla.innerHTML += `
-                <tr>
-                    <td>${player.vezeteknev} ${player.utonev}</td>
-                    <td>${player.csapatnev}</td>
-                    <td>${player.poszt}</td>
-                    <td><button onclick="torles(${player.id})">Törlés</button></td>
-                </tr>`;
-        });
-    } catch (hiba) {
-        console.error("Hiba az adatok lekérésekor:", hiba);
-    }
-}
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Fetch API menü</title>
+</head>
+<body>
+    <header>
+        <h1>Web programozás-1 Előadás Házi feladat</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Főoldal</a></li>
+            <li><a href="javascript.html">JavaScript menü</a></li>
+            <li><a href="react.html">React menü</a></li>
+            <li><a href="spa.html">SPA menü</a></li>
+            <li><a href="fetchapi.html">Fetch API menü</a></li>
+            <li><a href="axios.html">Axios menü</a></li>
+            <li><a href="oojs.html">OOJS menü</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>Fetch API CRUD (Adatbázis alapú)</h2>
+        <div id="fetch-app">
+            <h3>Új poszt hozzáadása</h3>
+            <input type="number" id="ujId" placeholder="ID (pl. 15)">
+            <input type="text" id="ujNev" placeholder="Poszt neve">
+            <button onclick="hozzaad()">Hozzáadás</button>
 
-// Oldal betöltésekor indítjuk a listázást
-window.onload = listazas;
+            <hr>
+            <table border="1" id="adatTabla" style="margin-top: 20px; width: 100%; text-align: left;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Név</th>
+                        <th>Műveletek</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    
+    <script>
+        const apiUrl = 'api_poszt-php';
+
+        async function lekerdez() {
+            const response = await fetch(apuUrl);
+            const adatok = await response.json();
+            render(adatok);
+        }
+
+        function render(adatok) {
+            const tbody = document.querySelector('#adatTabla tbody');
+            tbody.innerHTML = '';
+            adatok.forEach(poszt => {
+                tbody,innerHTML += `
+                <tr>
+                <td>${poszt.id}</td>
+                <td>${poszt.nev}</td>
+                <td>
+                <button onclick="modosit(${poszt.id})">Módosítás</button>
+                <button onclick="torol(${poszt.id})">Törlés</button>
+                </td>
+                </tr>
+                `;
+            });
+        }
+
+        async function hozzaad() {
+            const idInput = document.getElementById('ujId').value;
+                const nevInput  = document.getElementById('ujNev').value;
+            if (idInput && nevInput) {
+                await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: idInput, nev: nevInput })
+                });
+                
+                document.getElementById('ujId').value = '';
+                document.getElementById('ujNev').value = '';
+                lekerdez();
+            }
+        }
+
+        async function torol(id) {
+            await fetch(`${apiUrl}?id=${id}`, {
+                method: 'DELETE'
+            });
+            lekerdez();
+        }
+
+        async function modosit(id) {
+            const ujNev = prompt("Kérem az új nevet:");
+            
+            if (ujNev && ujNev.trim() !== "") {
+                await fetch(apiUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: id, nev: ujNev.trim() })
+                });
+                lekerdez();
+            }
+        }
+
+        lekerdez();
+    </script>
+</body>
+</html>
