@@ -1,7 +1,24 @@
-// Egyszerű példa a listázásra
-async function klubokBetoltese() {
-    const response = await fetch('get_adatok.php');
-    const adatok = await response.json();
-    console.log(adatok); 
-    // Itt készíts egy táblázatot a DOM-ban az adatoknak [cite: 15]
+async function listazas() {
+    try {
+        const response = await fetch('api/get_players.php'); // [cite: 31]
+        const adatok = await response.json();
+        
+        const tabla = document.getElementById('jatekosok');
+        tabla.innerHTML = ''; // Táblázat ürítése
+        
+        adatok.forEach(player => {
+            tabla.innerHTML += `
+                <tr>
+                    <td>${player.vezeteknev} ${player.utonev}</td>
+                    <td>${player.csapatnev}</td>
+                    <td>${player.poszt}</td>
+                    <td><button onclick="torles(${player.id})">Törlés</button></td>
+                </tr>`;
+        });
+    } catch (hiba) {
+        console.error("Hiba az adatok lekérésekor:", hiba);
+    }
 }
+
+// Oldal betöltésekor indítjuk a listázást
+window.onload = listazas;
