@@ -1,1 +1,7 @@
-
+// Egyszerű példa a listázásra
+async function klubokBetoltese() {
+    const response = await fetch('get_adatok.php');
+    const adatok = await response.json();
+    console.log(adatok); 
+    // Itt készíts egy táblázatot a DOM-ban az adatoknak [cite: 15]
+}
