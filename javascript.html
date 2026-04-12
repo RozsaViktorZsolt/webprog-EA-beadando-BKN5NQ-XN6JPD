@@ -2,32 +2,71 @@
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <title>Javascript menü</title>
+    <title>JS CRUD - Tömbben</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Web programozás Előadás beadandó</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="index.html">Főoldal</a></li>
-            <li><a href="javascript.html">JavaScript menü</a></li>
-            <li><a href="react.html">React menü</a></li>
-            <li><a href="spa.html">SPA menü</a></li>
-            <li><a href="fetchapi.html">Fetch API menü</a></li>
-            <li><a href="axios.html">Axios menü</a></li>
-            <li><a href="oojs.html">OOJS menü</a></li>
-        </ul>
-    </nav>
-    <main>
-        <h2>JavaScript CRUDE </h2>
-        <div id="js-app"></div>
-    </main>
-    <footer>
-        Készítette: Rózsa Viktor Zsolt-BKN5NQ, Vass Zoltán-XN6JPD
-    </footer>
-  <script>
+    <h1>JavaScript CRUD műveletek (Adatok tömbben)</h1>
     
-  </script>
+    <div id="form">
+        <input type="text" id="klubNev" placeholder="Klub neve">
+        <button onclick="hozzaad()">Hozzáadás</button>
+    </div>
+
+    <table id="klubTabla">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Csapatnév</th>
+                <th>Műveletek</th>
+            </tr>
+        </thead>
+        <tbody id="tablaTest"></tbody>
+    </tbody>
+    </table>
+
+    <script>
+        // Kezdő adatok az nbi_labdarugas.sql alapján
+        let klubok = [
+            { id: 1, csapatnev: 'Vasas FC' },
+            { id: 2, csapatnev: 'Ferencvárosi TC' },
+            { id: 3, csapatnev: 'Puskás Akadémia' }
+        ];
+
+        function tablaRendereles() {
+            const test = document.getElementById('tablaTest');
+            test.innerHTML = '';
+            klubok.forEach((klub, index) => {
+                test.innerHTML += `
+                    <tr>
+                        <td>${klub.id}</td>
+                        <td>${klub.csapatnev}</td>
+                        <td><button onclick="torles(${index})">Törlés</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function hozzaad() {
+            const nev = document.getElementById('klubNev').value;
+            if (nev) {
+                const ujKlub = { id: klubok.length + 1, csapatnev: nev };
+                klubok.push(ujKlub);
+                document.getElementById('klubNev').value = '';
+                tablaRendereles();
+            }
+        }
+
+        function torles(index) {
+            klubok.splice(index, 1);
+            tablaRendereles();
+        }
+
+        tablaRendereles();
+    </script>
 </body>
 </html>
