@@ -26,11 +26,93 @@
       <h2>React CRUD</h2>
       <div id="react-app"></div>
     </main>
-    <footer>
-        Készítette: Rózsa Viktor Zsolt-BKN5NQ, Vass Zoltán-XN6JPD
-    </footer>
+    
     <script type="text/label">
-      
+      const { useState } = React;
+
+      const App = () => {
+      const [klubok, setKlubok] = useState([
+      { id: 1, csapatnev: "Vasas FC" },
+      { id: 2, csapatnev: "Ferencvárosi TC" },
+      { id: 3, csapatnev: "Puskás Akadémia FC" },
+      { id: 4, csapatnev: "Debreceni VSC" },
+      { id: 5, csapatnev: "Budapest Honvéd FC" }
+      ]);
+      const [ujKlubNev, setUjKlubNev] = useState("");
+      const [szerkesztesId, setSzerkesztesId] = useState(null);
+      const [szerkesztesNev, setSzerkesztesNev] = useState("");
+
+      const hozzaad = () => {
+      if (ujKlubnev.trim() !== "") {
+      const ujId = klubok.lenght > 0 ? Math.max(...klubok.map(k => k.id)) + 1 : 1;
+      setKlubok([...klubok, { id: ujId, csapatnev: ujKlubNev }]);
+      setUjKlubNev("");
+      }
+      };
+      const mentes = (id) => {
+      setKlubok(klubok.map(k => k.id === id ? { ...k, csapatnev: szerkesztesNev } : k));
+      setSzerkesztesId(null);
+      setSzerkesztesNev("");
+      };
+
+      return(
+      <div>
+      <h3>Új klub hozzáadása</h3>
+      <input
+      type="text"
+      value={ujKlubNev}
+      onChange={(e) => setUjKlubNev(e.target.value)}
+      placeholder="Klub Neve"
+      />
+      <button onClick={hozzaad}>Hozzáadás</button>
+
+      <hr />
+      <table border="1" style={{ marginTop: "20px", width: "100%", textAlign: "left" }}>
+      <thead>
+      <tr>
+      <th>ID</th>
+      <th>Csapatnév</th>
+      <th>Műveletek</th>
+    </tr>
+    </thead>
+      <tbody>
+      {klubok.map(klub => (
+      <tr key={klub.id}>
+      <td>{klub.id}</td>
+      <td>
+      {szerkesztesId === klub.id ? (
+      <input
+      type="text"
+      value={szerkesztesNev}
+      onChange={(e) => setSzerkesztesNev(e.target.value)}
+      />
+      ) : (
+      klub.csapatnev
+      )}
+    </td>
+      <td>
+      {szerkesztesId === klub.id ? (
+      <button onClick={() => mentes(klub.id)}>Mentés</button>
+      ) : (
+      <>
+      <button onClick={() => {
+      setSzerkesztesId(klub.id);
+      setSzerkesztesNev(klub.csapatnev);
+      }}>Módosítás</button>
+      <button onClick={() => torol(klub.id)}>Törlés</button>
+      </>
+      )}
+    </td>
+    </tr>
+      ))}
+    </tbody>
+    </table>
+    </div>
+      );
+      };
+
+      const root = ReactDOM.createRoot(document.getElementById('react-app'));
+      root.render(<App />);
     </script>
   </body>
 </html>
