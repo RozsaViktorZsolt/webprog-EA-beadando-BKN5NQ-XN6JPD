@@ -1,1 +1,8 @@
+import axios from 'axios';
 
+const [players, setPlayers] = useState([]);
+
+const getPlayers = async () => {
+    const res = await axios.get('http://tárhelyed.hu/api/get_players.php');
+    setPlayers(res.data);
+};
