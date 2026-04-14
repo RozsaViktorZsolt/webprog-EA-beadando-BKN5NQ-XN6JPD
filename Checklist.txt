@@ -3,4 +3,5 @@ Axios.html✅
 Fetchapi.html✅
 javascript.html✅
 react.html✅
+spa.html✅
 nbibeadando.sql✅
