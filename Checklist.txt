@@ -1,3 +1,6 @@
 Index.html✅
 Axios.html✅
-✅
+Fetchapi.html✅
+javascript.html✅
+react.html✅
+nbibeadando.sql✅
