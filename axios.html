@@ -1,32 +1,142 @@
 <!DOCTYPE html>
-<html lang=hu">
-    <head>
-        <meta charset="UTF-8">
-        <title>Axios menü</title>
-        <script src ="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-         <script src ="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-          <script src ="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
-           <script src ="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" crossorigin></script>
-        
-           <head>
-               <body>
-                   <header>
-                       <h1>Web programozás beadandó</h1>
-                   </header>
-                   <nav>
-                       <ul>
-                           <li><a href="index.html">Főoldal</a></li>
-                           <li><a href="javascript.html">JavaScript menü</a></li>
-                           <li><a href="react.html">React menü</a></li>
-                           <li><a href="fetchapi.html">Fetch API menü</a></li>
-                           <li><a href="axios.html">Axios menü</a></li>
-                           <li><a href="oojs.html">OOJS menü</a></li>
-                       </ul>
-                   </nav>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Axios menü</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Web programozás-1 Előadás Házi feladat</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Főoldal</a></li>
+            <li><a href="javascript.html">JavaScript menü</a></li>
+            <li><a href="react.html">React menü</a></li>
+            <li><a href="spa.html">SPA menü</a></li>
+            <li><a href="fetchapi.html">Fetch API menü</a></li>
+            <li><a href="axios.html">Axios menü</a></li>
+            <li><a href="oojs.html">OOJS menü</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>React + Axios CRUD (Adatbázis alapú)</h2>
+        <div id="axios-app"></div>
+    </main>
+    
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-                   <main>
-                       <h2>React + Axios CRUD</h2>
-                       <div id="axios-app"></div>
-                   </main>
-               </body>
-           </head>
+        const App = () => {
+            const [adatok, setAdatok] = useState([]);
+            const [ujId, setUjId] = useState("");
+            const [ujNev, setUjNev] = useState("");
+            const [szerkesztesId, setSzerkesztesId] = useState(null);
+            const [szerkesztesNev, setSzerkesztesNev] = useState("");
+            
+            const apiUrl = 'api_poszt.php';
+
+            const lekerdez = async () => {
+                const response = await axios.get(apiUrl);
+                setAdatok(response.data);
+            };
+
+            useEffect(() => {
+                lekerdez();
+            }, []);
+
+            const hozzaad = async () => {
+                if (ujId && ujNev) {
+                    await axios.post(apiUrl, { id: ujId, nev: ujNev });
+                    setUjId("");
+                    setUjNev("");
+                    lekerdez();
+                }
+            };
+
+            const torol = async (id) => {
+                await axios.delete(`${apiUrl}?id=${id}`);
+                lekerdez();
+            };
+
+            const modosit = async (id) => {
+                if (szerkesztesNev) {
+                    await axios.put(apiUrl, { id: id, nev: szerkesztesNev });
+                    setSzerkesztesId(null);
+                    setSzerkesztesNev("");
+                    lekerdez();
+                }
+            };
+
+            return (
+                <div>
+                    <h3>Új poszt hozzáadása</h3>
+                    <input 
+                        type="number" 
+                        value={ujId} 
+                        onChange={(e) => setUjId(e.target.value)} 
+                        placeholder="ID" 
+                    />
+                    <input 
+                        type="text" 
+                        value={ujNev} 
+                        onChange={(e) => setUjNev(e.target.value)} 
+                        placeholder="Poszt neve" 
+                    />
+                    <button onClick={hozzaad}>Hozzáadás</button>
+                    
+                    <hr />
+                    
+                    <table border="1" style={{ marginTop: "20px", width: "100%", textAlign: "left" }}>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Név</th>
+                                <th>Műveletek</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {adatok.map(poszt => (
+                                <tr key={poszt.id}>
+                                    <td>{poszt.id}</td>
+                                    <td>
+                                        {szerkesztesId === poszt.id ? (
+                                            <input 
+                                                type="text" 
+                                                value={szerkesztesNev} 
+                                                onChange={(e) => setSzerkesztesNev(e.target.value)} 
+                                            />
+                                        ) : (
+                                            poszt.nev
+                                        )}
+                                    </td>
+                                    <td>
+                                        {szerkesztesId === poszt.id ? (
+                                            <button onClick={() => modosit(poszt.id)}>Mentés</button>
+                                        ) : (
+                                            <>
+                                                <button onClick={() => {
+                                                    setSzerkesztesId(poszt.id);
+                                                    setSzerkesztesNev(poszt.nev);
+                                                }}>Módosítás</button>
+                                                <button onClick={() => torol(poszt.id)}>Törlés</button>
+                                            </>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('axios-app'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
