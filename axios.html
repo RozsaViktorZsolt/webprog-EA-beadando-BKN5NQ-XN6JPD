@@ -1,8 +1,32 @@
-import axios from 'axios';
+<!DOCTYPE html>
+<html lang=hu">
+    <head>
+        <meta charset="UTF-8">
+        <title>Axios menü</title>
+        <script src ="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+         <script src ="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+          <script src ="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+           <script src ="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" crossorigin></script>
+        
+           <head>
+               <body>
+                   <header>
+                       <h1>Web programozás beadandó</h1>
+                   </header>
+                   <nav>
+                       <ul>
+                           <li><a href="index.html">Főoldal</a></li>
+                           <li><a href="javascript.html">JavaScript menü</a></li>
+                           <li><a href="react.html">React menü</a></li>
+                           <li><a href="fetchapi.html">Fetch API menü</a></li>
+                           <li><a href="axios.html">Axios menü</a></li>
+                           <li><a href="oojs.html">OOJS menü</a></li>
+                       </ul>
+                   </nav>
 
-const [players, setPlayers] = useState([]);
-
-const getPlayers = async () => {
-    const res = await axios.get('http://tárhelyed.hu/api/get_players.php');
-    setPlayers(res.data);
-};
+                   <main>
+                       <h2>React + Axios CRUD</h2>
+                       <div id="axios-app"></div>
+                   </main>
+               </body>
+           </head>
