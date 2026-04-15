@@ -1,0 +1,36 @@
+.tic-tac-toe-board {
+    display: grid;
+    grid-template-columns: repeat(3, 50px);
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.tic-tac-toe-cell {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.calc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 50px);
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.calc-btn {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.spa-nav button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.spa-container {
+    font-family: Arial, sans-serif;
+}
