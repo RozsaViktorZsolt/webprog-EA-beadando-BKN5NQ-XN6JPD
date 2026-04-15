@@ -1,8 +1,0 @@
-Index.html✅
-Axios.html✅
-Fetchapi.html✅
-javascript.html✅
-react.html✅
-spa.html✅
-oojs.html✅
-nbibeadando.sql✅
