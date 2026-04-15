@@ -3,7 +3,7 @@ header('Content-Type: application/json; charset=utf-8');
 require_once 'db.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
-$inout = json_decode(file_get_contents('php://input'), true);
+$input = json_decode(file_get_contents('php://input'), true);
 
 switch($method) {
   case 'GET':
