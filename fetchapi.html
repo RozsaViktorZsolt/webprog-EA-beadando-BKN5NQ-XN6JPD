@@ -43,10 +43,10 @@
     </main>
     
     <script>
-        const apiUrl = 'api_poszt-php';
+        const apiUrl = 'api_poszt.php';
 
         async function lekerdez() {
-            const response = await fetch(apuUrl);
+            const response = await fetch(apiUrl);
             const adatok = await response.json();
             render(adatok);
         }
@@ -55,7 +55,7 @@
             const tbody = document.querySelector('#adatTabla tbody');
             tbody.innerHTML = '';
             adatok.forEach(poszt => {
-                tbody,innerHTML += `
+                tbody.innerHTML += `
                 <tr>
                 <td>${poszt.id}</td>
                 <td>${poszt.nev}</td>
