@@ -68,7 +68,8 @@
             });
         }
 
-        async function hozzaad() {
+        async function hozzaad(e) {
+            e.preventDefault();
             const idInput = document.getElementById('ujId').value;
                 const nevInput  = document.getElementById('ujNev').value;
             if (idInput && nevInput) {
