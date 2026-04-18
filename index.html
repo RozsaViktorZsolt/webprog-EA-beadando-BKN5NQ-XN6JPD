@@ -6,27 +6,33 @@
     <title>NBI Projekt - Főoldal</title>
     <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; background-color: #f4f4f4; }
-        nav { background: #333; padding: 10px; }
+        header h1 { margin-bottom: 5px; }
+        nav { background: #333; padding: 10px; margin-bottom: 20px; }
         nav a { color: #fff; margin-right: 15px; text-decoration: none; }
         footer { margin-top: 50px; padding: 20px; border-top: 1px solid #ccc; font-style: italic; }
-        .container { background: white; padding: 20px; border-radius: 8px; }
+        main { background: white; padding: 20px; border-radius: 8px; } /* Itt a container helyett a main kapja a formázást */
     </style>
 </head>
 <body>
+    <header>
+        <h1>Web programozás-1 Előadás Házi feladat</h1>
+    </header>
+
     <nav>
         <a href="index.html">Főoldal</a>
         <a href="javascript.html">JS CRUD</a>
         <a href="fetchapi.html">Fetch API</a>
         <a href="oojs.html">OOJS Grafika</a>
         <a href="react.html">React CRUD</a>
+        <a href="spa.html">SPA Menü</a>
+        <a href="axios.html">Axios Menü</a>
     </nav>
 
-    <div class="container">
-        <h1>Web programozás-1 Előadás Házi feladat</h1>
+    <main>
         <h2>NBI Labdarúgás Adatbázis Kezelő</h2>
         <p>Üdvözöljük a magyar labdarúgó-bajnokság adatait feldolgozó webalkalmazásban!</p>
         <p>Ez a projekt a Web-programozás 1 kurzus beadandó feladata, amely bemutatja a modern webes technológiák használatát a CRUD műveletektől az objektumorientált JavaScriptig.</p>
-    </div>
+    </main>
 
     <footer>
         Készítette: Rózsa Viktor Zsolt-BKN5NQ, Vass Zoltán-XN6JPD
