@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 // A tárhelyed adataival töltsd ki! [cite: 59, 60]
-$dbh = new PDO('mysql:host=localhost;dbname=adatb_neve', 'felhasznalo', 'jelszo',
+$dbh = new PDO('mysql:host=localhost;dbname=nbibeadando', 'nbibeadando', 'HasználjonErősJelszót',
 array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
 
 $stmt = $dbh->query("SELECT * FROM klub"); // Kezdésnek a klubokat kérjük le
