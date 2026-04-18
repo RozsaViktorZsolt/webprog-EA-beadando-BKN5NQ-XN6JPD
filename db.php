@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
-$dbname = 'adatb';
-$user = 'adatbf';
-$pass = '****';
+$dbname = 'nbibeadando';
+$user = 'nbibeadando';
+$pass = 'HasználjonErősJelszót';
 
 try{
   $dbh = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass, array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
