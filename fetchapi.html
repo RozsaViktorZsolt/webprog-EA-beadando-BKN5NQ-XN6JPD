@@ -25,7 +25,7 @@
             <h3>Új poszt hozzáadása</h3>
             <input type="number" id="ujId" placeholder="ID (pl. 15)">
             <input type="text" id="ujNev" placeholder="Poszt neve">
-            <button onclick="hozzaad()">Hozzáadás</button>
+            <button onclick="hozzaad(event)">Hozzáadás</button>
 
             <hr>
             <table border="1" id="adatTabla" style="margin-top: 20px; width: 100%; text-align: left;">
@@ -68,8 +68,8 @@
             });
         }
 
-        async function hozzaad(e) {
-            e.preventDefault();
+        async function hozzaad(event) {
+            event.preventDefault();
             const idInput = document.getElementById('ujId').value;
                 const nevInput  = document.getElementById('ujNev').value;
             if (idInput && nevInput) {
