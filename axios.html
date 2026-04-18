@@ -49,7 +49,8 @@
                 lekerdez();
             }, []);
 
-            const hozzaad = async () => {
+            const hozzaad = async (e) => {
+                e.preventDefault();
                 if (ujId && ujNev) {
                     await axios.post(apiUrl, { id: ujId, nev: ujNev });
                     setUjId("");
