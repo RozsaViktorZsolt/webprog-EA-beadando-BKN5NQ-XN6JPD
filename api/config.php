@@ -1,9 +1,9 @@
 <?php
-// Adatbázis adatok - töltsd ki a sajátoddal! [cite: 59]
+
 $host = 'localhost';
-$dbname = 'adatbazis_neve'; // [cite: 62]
-$user = 'felhasznalonev';   // [cite: 63]
-$pass = 'jelszo';           // [cite: 64]
+$dbname = 'adatbazis_neve'; 
+$user = 'felhasznalonev';  
+$pass = 'jelszo';           
 
 try {
     $dbh = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
